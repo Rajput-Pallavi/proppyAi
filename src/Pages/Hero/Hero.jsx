@@ -5,6 +5,8 @@ import img from '../../assets/img.png'
 const Hero = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState('newChat');
+    const [searchValue, setSearchValue] = useState('');
+    const [outputText, setOutputText] = useState('');
 
     const openSidebar = () => {
         setSidebarOpen(true);
@@ -25,6 +27,21 @@ const Hero = () => {
 
     const handleOverlayClick = () => {
         closeSidebar();
+    };
+
+    const handleSearch = async () => {
+        if (!searchValue) return;
+        try {
+            const response = await fetch('http://localhost:5000/api/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: searchValue }),
+            });
+            const data = await response.json();
+            setOutputText(data.result);
+        } catch (error) {
+            setOutputText('Error connecting to backend.');
+        }
     };
 
     return (
@@ -62,18 +79,32 @@ const Hero = () => {
                     ☰ Menu
                 </button>
                 <div className="logo">Proppy Ai</div>
-                <div className="search-bar">
-                    <input type="text" placeholder="Search..." />
-                </div>
+                
+                    
             </div>
-
             {/* Main Content */}
             <div className="main-content">
                 {/* New Chat Page */}
                 {currentPage === 'newChat' && (
                     <div className="page active">
+                        {/* search bar here */}
+                        <div className="search-bar">
+                            <input
+                                value={searchValue}
+                                onChange={e => setSearchValue(e.target.value)}
+                                placeholder="Search..."
+                                onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
+                            />
+                            <button className="search-arrow" onClick={handleSearch} tabIndex={-1}>
+                                &gt;
+                            </button>
+                        </div>
                         <div className="chat-container">
-                            <div className="chat-area"></div>
+                            <div className="chat-area">
+                                <div className="output-text">
+                                    {outputText}
+                                </div>
+                            </div>
                             <div className="character-placeholder">
                                 <img src={img} alt="" />
                             </div>

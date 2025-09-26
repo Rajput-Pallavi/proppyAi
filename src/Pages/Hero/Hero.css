@@ -12,7 +12,21 @@ body {
 }
 
 .app-container {
-    position: relative;
+    position: relative;    .page {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: translateY(20px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    }
     min-height: 100vh;
 }
 
@@ -46,7 +60,8 @@ body {
 img{
   height: 600px;
   width: 600px;
-  margin-top: -90px;
+  margin-top:-440px;
+
 }
 
 .logo {
@@ -56,25 +71,43 @@ img{
 }
 
 .search-bar {
-    flex: 1;
-    max-width: 400px;
-    margin: 0 20px;
-    
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 2rem 0;
+
 }
 
 .search-bar input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 2px solid #ddd;
-    border-radius: 25px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-  
+  width: 500px;
+  max-width: 90vw;
+  padding: 1.2rem 3rem 1.2rem 2rem; /* right padding for arrow */
+  font-size: 1.5rem;
+  border-radius: 30px;
+  border: 2px solid #ff6b35;
+  outline: none;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
-.search-bar input:focus {
-    border-color: #ff6b35;
+.search-arrow {
+  position: absolute;
+  right: 520px; /* Adjust this value to move arrow inside input */
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ff6b35;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  line-height: 1;
+  z-index: 2;
+}
+
+.search-arrow:focus {
+  outline: none;
 }
 
 /* Sidebar */
@@ -197,6 +230,20 @@ img{
     background: #2d5a2d;
     border-radius: 10px;
     position: relative;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default; /* This ensures no text cursor appears */
+    user-select: none; /* Optional: prevents text selection */
+}
+
+.output-text {
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    white-space: pre-wrap;
 }
 
 .character-placeholder {
