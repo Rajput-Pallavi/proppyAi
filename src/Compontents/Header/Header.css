@@ -1,0 +1,35 @@
+
+.header {
+    background: rgba(238, 223, 151, 0.9);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 100;
+}
+
+.menu-btn {
+    background: #ff6b35;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.menu-btn:hover {
+    background: #e55a2e;
+    transform: translateY(-1px);
+}
+
+.logo {
+    font-size: 58px;
+    font-weight: bold;
+    color: #333;
+    padding-left: 70px;
+    padding-bottom: 90px;
+}
