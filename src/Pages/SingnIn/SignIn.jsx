@@ -1,9 +1,42 @@
 // PropsySignIn.jsx
+import axios from 'axios';
 import React, { useState } from 'react';
 import './SignIn.css';
 import img from '../../assets/img.png'
 export default function PropsySignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
+
+
+    // Form states
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [signupData, setSignupData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    age: '',
+    class: ''
+  });
+
+  const handleSignup = async () => {
+  if (signupData.password !== signupData.confirmPassword) {
+    alert('Passwords do not match!');
+    return;
+  }
+  try {
+    const res = await axios.post('http://127.0.0.1:5000/signup', {
+      name: signupData.name,
+      email: signupData.email,
+      password: signupData.password,
+      age: signupData.age,
+      class: signupData.class
+    });
+    alert(res.data.message || 'Account created!');
+    setIsSignIn(true); // switch to login after successful signup
+  } catch (err) {
+    alert(err.response?.data?.error || 'Signup failed');
+  }
+};
 
   return (
     <div className="propsy-container">
@@ -112,11 +145,26 @@ export default function PropsySignIn() {
 
               <div className="input-group">
                 <div className="input-wrapper">
+                  <span className="input-icon">👤</span>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="input-field"
+                    value={signupData.name}
+                    onChange={e => setSignupData({ ...signupData, name: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="input-group">
+                <div className="input-wrapper">
                   <span className="input-icon">✉️</span>
                   <input
                     type="email"
-                    placeholder="email"
+                    placeholder="Email"
                     className="input-field"
+                    value={signupData.email}
+                    onChange={e => setSignupData({ ...signupData, email: e.target.value })}
                   />
                 </div>
               </div>
@@ -126,8 +174,10 @@ export default function PropsySignIn() {
                   <span className="input-icon">🔒</span>
                   <input
                     type="password"
-                    placeholder="password"
+                    placeholder="Password"
                     className="input-field"
+                    value={signupData.password}
+                    onChange={e => setSignupData({ ...signupData, password: e.target.value })}
                   />
                 </div>
               </div>
@@ -137,13 +187,41 @@ export default function PropsySignIn() {
                   <span className="input-icon">🔒</span>
                   <input
                     type="password"
-                    placeholder="confirm password"
+                    placeholder="Confirm Password"
                     className="input-field"
+                    value={signupData.confirmPassword}
+                    onChange={e => setSignupData({ ...signupData, confirmPassword: e.target.value })}
                   />
                 </div>
               </div>
 
-              <button className="login-btn">Create Account</button>
+              <div className="input-group">
+                <div className="input-wrapper">
+                  <span className="input-icon">🎂</span>
+                  <input
+                    type="number"
+                    placeholder="Age"
+                    className="input-field"
+                    value={signupData.age}
+                    onChange={e => setSignupData({ ...signupData, age: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="input-group">
+                <div className="input-wrapper">
+                  <span className="input-icon">🏫</span>
+                  <input
+                    type="text"
+                    placeholder="Class"
+                    className="input-field"
+                    value={signupData.class}
+                    onChange={e => setSignupData({ ...signupData, class: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <button className="login-btn" onClick={handleSignup}>Create Account</button>
 
               <div className="account-link">
                 Already have an account? <a onClick={() => setIsSignIn(true)}>Sign In</a>
