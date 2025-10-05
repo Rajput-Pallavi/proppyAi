@@ -1,0 +1,298 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.propsy-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Left Section Styles */
+.left-section {
+  flex: 1;
+  background: linear-gradient(135deg, #ff3366 0%, #ff3366 50%, #9933ff 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  color: white;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.backslash {
+  color: #ffeb3b;
+  font-size: 50px;
+  position: absolute;
+  left: -35px;
+  top: -15px;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  margin-top: -250px;
+}
+
+.main-heading {
+  font-size: 52px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.highlight {
+  color: #ffeb3b;
+}
+
+.subtext {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  opacity: 0.95;
+}
+
+.mascot {
+  position: absolute;
+  bottom: 0;
+  right: -45px;
+  font-size: 250px;
+  line-height: 1;
+}
+
+/* Right Section Styles */
+.right-section {
+  flex: 1;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  border: 2px solid #333;
+  border-radius: 8px;
+}
+
+.brand-title {
+  font-size: 48px;
+  font-weight: 1000;
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  font-family: Impact, 'Arial Black', sans-serif;
+}
+
+.form-wrapper {
+  width: 100%;
+}
+
+.form-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #999;
+  z-index: 1;
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px 15px 15px 50px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #9933ff;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.forgot-password {
+  color: #333;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #b85959 0%, #9e5252 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+}
+
+.divider {
+  text-align: center;
+  margin: 25px 0;
+  color: #999;
+  position: relative;
+}
+
+.divider span {
+  background: white;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 25px;
+}
+
+.social-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+}
+
+.account-link {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+.account-link a {
+  color: #9933ff;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .propsy-container {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 40px 30px;
+    min-height: 300px;
+  }
+
+  .logo {
+    font-size: 16px;
+    left: 30px;
+    top: 30px;
+  }
+
+  .main-heading {
+    font-size: 36px;
+  }
+
+  .mascot {
+    font-size: 150px;
+    right: 20px;
+  }
+
+  .right-section {
+    padding: 20px;
+  }
+
+  .form-container {
+    padding: 30px 20px;
+  }
+
+  .brand-title {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,12 @@
+.app-container {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5e6a3, #f0d070, #e6c55a);
+    overflow-x: hidden;
+}
+
+.main-content {
+    padding: 20px;
+    min-height: calc(100vh - 70px);
+    transition: margin-left 0.3s ease;
+}

@@ -1,0 +1,44 @@
+.chat-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 15px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.chat-area {
+    width: 60%;
+    height: 400px;
+    background: #2d5a2d;
+    border-radius: 10px;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.output-text {
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+.character-placeholder {
+    position: absolute;
+    right: -60px;
+    bottom: -30px;
+    width: 180px;
+    height: 300px;
+}
+img{
+  height: 600px;
+  margin-top:-310px;
+  padding-left: -70px;
+}
