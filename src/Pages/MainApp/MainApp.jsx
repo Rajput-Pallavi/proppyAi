@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // <- import
 import Header from '../../Compontents/Header/Header.jsx';
 import Sidebar from '../../Compontents/Sidebar/Sidebar.jsx';
 import NewChat from "../NewChat/NewChat";
@@ -6,11 +7,20 @@ import Library from "../Library/Library";
 import "./MainApp.css";
 
 const MainApp = () => {
+  const navigate = useNavigate(); // <- initialize
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState("newChat");
   const [searchValue, setSearchValue] = useState("");
   const [outputText, setOutputText] = useState("");
   
+
+  // ----------------------
+  // Redirect if not logged in
+  // ----------------------
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) navigate("/signin"); // redirect to signin if not logged in
+  }, [navigate]);
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
