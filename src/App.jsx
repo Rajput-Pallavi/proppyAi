@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainApp from './Pages/MainApp/MainApp';
-import SignIn from'../src/Pages/SingnIn/SignIn';
+import SignIn from'./Pages/SignIn/SignIn';
 import Shorts from './Pages/Shorts/Shorts';
 
 
