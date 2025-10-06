@@ -296,3 +296,42 @@
     font-size: 36px;
   }
 }
+
+.input-wrapper {
+  position: relative;
+}
+
+.show-hide-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+}
+
+.password-warning {
+  color: red;
+  font-size: 0.75rem;
+  margin-top: 2px;
+  display: block;
+}
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
