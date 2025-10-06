@@ -10,6 +10,7 @@ const MainApp = () => {
   const [currentPage, setCurrentPage] = useState("newChat");
   const [searchValue, setSearchValue] = useState("");
   const [outputText, setOutputText] = useState("");
+  
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
@@ -53,6 +54,7 @@ const MainApp = () => {
           />
         )}
         {currentPage === "library" && <Library />}
+        
       </div>
     </div>
   );

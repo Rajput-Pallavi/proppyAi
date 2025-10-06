@@ -1,17 +1,6 @@
-.chat-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    border-radius: 15px;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
 
 .chat-area {
-    width: 60%;
+    width: 50%;
     height: 400px;
     background: #2d5a2d;
     border-radius: 10px;
@@ -38,7 +27,8 @@
     height: 300px;
 }
 img{
-  height: 600px;
-  margin-top:-310px;
-  padding-left: -70px;
+  height: 530px;
+  margin-top:-430px;
+ margin-left: -300px;
+ margin-bottom: -130px;
 }
