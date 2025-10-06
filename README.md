@@ -7,7 +7,8 @@ python ../api/app.py
 
 npm install
 npm run dev
-
+npm install react-icons
+npm install axios 
 
 # React + Vite
 
