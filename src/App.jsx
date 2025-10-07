@@ -16,6 +16,9 @@ const App = () => {
 
         {/* Sign In page */}
         <Route path="/signin" element={<SignIn />} />
+        
+        {/* Shorts In Page */}
+        <Route path="/shorts" element={<Shorts />} />
 
         {/* Main page after login */}
         <Route path="/main" element={<MainPage />} />
