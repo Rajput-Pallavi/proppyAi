@@ -3,7 +3,7 @@
   left: 0;
   top: 0;
   height: 100vh;
-  background: linear-gradient(180deg, #f6ef34, #f0f09c);
+  background: linear-gradient(180deg, #e579e9, #e971cd);
   box-shadow: 2px 0 15px rgba(14, 14, 11, 0.15);
   z-index: 1000;
   display: flex;
@@ -18,7 +18,7 @@
 }
 
 .sidebar.closed {
-  width: 80px;
+  width: 60px;
 }
 
 /* Header */
@@ -99,4 +99,12 @@
 
 .sidebar.closed .menu-item:hover {
   background: rgba(255, 255, 255, 0.7);
+}
+
+.rec{
+  margin-top: 150px;
+  width: 60px;
+  height: 30px;
+  font-size: 19px;
+  
 }

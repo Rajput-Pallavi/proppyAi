@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import profilePic from "../../assets/img1.png"; // make sure you have an image in /assets/
+import Chats from "../Chats/Chats";
+import Logout from "../Logout/Logout";
 
 const Sidebar = ({ currentPage, showPage }) => {
   const [isOpen, setIsOpen] = useState(true); // Sidebar open/close state
@@ -32,7 +33,10 @@ const Sidebar = ({ currentPage, showPage }) => {
         >
           <span>📚</span> {isOpen && "Library"}
         </button>
+         <Chats/>  
+         <Logout/>
       </div>
+      
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // <- import
-import Header from '../../Compontents/Header/Header.jsx';
+
 import Sidebar from '../../Compontents/Sidebar/Sidebar.jsx';
 import NewChat from "../NewChat/NewChat";
 import Library from "../Library/Library";
 import "./MainApp.css";
+
 
 const MainApp = () => {
   const navigate = useNavigate(); // <- initialize
@@ -45,6 +46,7 @@ const MainApp = () => {
   };
 
   return (
+    
     <div className="app-container">
       <Sidebar
         sidebarOpen={sidebarOpen}
@@ -52,7 +54,7 @@ const MainApp = () => {
         showPage={showPage}
         closeSidebar={closeSidebar}
       />
-      <Header toggleSidebar={toggleSidebar} />
+      
 
       <div className="main-content">
         {currentPage === "newChat" && (
@@ -64,8 +66,12 @@ const MainApp = () => {
           />
         )}
         {currentPage === "library" && <Library />}
-        
+       <div>
+      
+       </div>
+       
       </div>
+      
     </div>
   );
 };

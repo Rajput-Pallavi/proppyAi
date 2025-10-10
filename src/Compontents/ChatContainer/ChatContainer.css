@@ -1,7 +1,17 @@
+.chat-container {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
 .chat-area {
-    width: 50%;
-    height: 400px;
+    width: 85%;
+    height: 250px;
     background: #2d5a2d;
     border-radius: 10px;
     position: relative;
@@ -10,25 +20,188 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 1;
 }
 
 .output-text {
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.2rem;
     text-align: center;
     white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 100%;
 }
 
 .character-placeholder {
     position: absolute;
-    right: -60px;
-    bottom: -30px;
-    width: 180px;
-    height: 300px;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    pointer-events: none;
 }
-img{
-  height: 530px;
-  margin-top:-430px;
- margin-left: -300px;
- margin-bottom: -130px;
+
+.character-placeholder img {
+    display: block;
+    height: 280px;
+    width: auto;
+    object-fit: contain;
+    margin-right: -70px;
+    margin-bottom: 30px;
+}
+
+/* Small phones (iPhone SE, etc) */
+@media (max-width: 375px) {
+    .chat-container {
+        min-height: 300px;
+        padding: 15px;
+    }
+    
+    .chat-area {
+        width: 90%;
+        height: 200px;
+        padding: 12px;
+    }
+    
+    .output-text {
+        font-size: 1rem;
+    }
+    
+    .character-placeholder img {
+        height: 220px;
+    }
+}
+
+/* Standard mobile phones */
+@media (min-width: 376px) and (max-width: 767px) {
+    .chat-container {
+        min-height: 350px;
+    }
+    
+    .chat-area {
+        width: 85%;
+        height: 220px;
+    }
+    
+    .output-text {
+        font-size: 1.15rem;
+    }
+    
+    .character-placeholder img {
+        height: 300px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .chat-container {
+        min-height: 450px;
+    }
+    
+    .chat-area {
+        width: 70%;
+        height: 300px;
+        padding: 20px;
+    }
+    
+    .output-text {
+        font-size: 1.5rem;
+    }
+    
+    .character-placeholder {
+        right: 5%;
+    }
+    
+    .character-placeholder img {
+        height: 400px;
+    }
+}
+
+/* Small desktop */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .chat-container {
+        min-height: 500px;
+    }
+    
+    .chat-area {
+        width: 60%;
+        max-width: 700px;
+        height: 350px;
+        padding: 25px;
+    }
+    
+    .output-text {
+        font-size: 1.75rem;
+    }
+    
+    .character-placeholder {
+        right: 8%;
+    }
+    
+    .character-placeholder img {
+        height: 480px;
+    }
+}
+
+/* Large desktop / iMac */
+@media (min-width: 1440px) {
+    .chat-container {
+        min-height: 550px;
+    }
+    
+    .chat-area {
+        width: 50%;
+        max-width: 800px;
+        height: 400px;
+        padding: 30px;
+    }
+    
+    .output-text {
+        font-size: 2rem;
+    }
+    
+    .character-placeholder {
+        right: 10%;
+    }
+    
+    .character-placeholder img {
+        height: 530px;
+    }
+}
+
+/* Extra large screens (iMac 27", 4K, etc) */
+@media (min-width: 1920px) {
+    .chat-container {
+        min-height: 600px;
+    }
+    
+    .chat-area {
+        width: 45%;
+        max-width: 900px;
+        height: 450px;
+    }
+    
+    .output-text {
+        font-size: 2.25rem;
+    }
+    
+    .character-placeholder {
+        right: 12%;
+    }
+    
+    .character-placeholder img {
+        height: 600px;
+    }
+}
+
+/* Landscape orientation for mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .chat-area {
+        height: 180px;
+    }
+    
+    .character-placeholder img {
+        height: 200px;
+    }
 }
