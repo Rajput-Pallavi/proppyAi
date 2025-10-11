@@ -7,7 +7,7 @@ const LogoutButton = () => {
     <div className="logout-container">
       <button className="logout-btn">
         <LogOut className="icon" />
-        Logout
+       <p> Logout</p>
       </button>
     </div>
   );

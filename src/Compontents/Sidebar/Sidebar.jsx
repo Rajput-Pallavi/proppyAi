@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import Chats from "../Chats/Chats";
 import Logout from "../Logout/Logout";
-
+import cha from '../../assets/Chat.png'
+import book from '../../assets/book.png'
 const Sidebar = ({ currentPage, showPage }) => {
   const [isOpen, setIsOpen] = useState(true); // Sidebar open/close state
 
@@ -20,21 +21,23 @@ const Sidebar = ({ currentPage, showPage }) => {
       </div>
 
       <div className="sidebar-menu">
-        <button
+        <button 
           className={`menu-item ${currentPage === "newChat" ? "active" : ""}`}
           onClick={() => showPage("newChat")}
         >
-          <span>💬</span> {isOpen && "New Chat"}
+          <img src={cha} alt="" />{isOpen && "New Chat"}
         </button>
 
         <button
           className={`menu-item ${currentPage === "library" ? "active" : ""}`}
           onClick={() => showPage("library")}
         >
-          <span>📚</span> {isOpen && "Library"}
+          <img  className='lib'src={book} alt="" /> {isOpen && "Library"}
         </button>
          <Chats/>  
-         <Logout/>
+      </div>
+      <div>
+        <Logout/>
       </div>
       
     </div>

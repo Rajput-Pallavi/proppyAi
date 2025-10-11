@@ -1,7 +1,7 @@
 .app-container {
     position: relative;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f4a148, #edce80, #ecac70);
+    background: linear-gradient(135deg, #f0e8e0, #f4e5cc, #f3e4d6);
     overflow-x: hidden;
 }
 
