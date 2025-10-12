@@ -22,7 +22,9 @@ const App = () => {
 
         {/* Main page after login */}
         <Route path="/main" element={<MainPage />} />
+        
       </Routes>
+      
     </Router>
   );
 };

@@ -1,25 +1,59 @@
-
-
-.menu-btn {
-    background: #ff6b35;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #fff;
-    transition: all 0.3s ease;
-}
-
-.menu-btn:hover {
-    background: #e55a2e;
-    transform: translateY(-1px);
+.top-nav {
+  width: 100%;
+  background-color: #ff4d4d;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
 }
 
 .logo {
-    font-size: 58px;
-    font-weight: bold;
-    color: #333;
-    padding-left: 70px;
-    padding-bottom: 90px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-btn:hover {
+  opacity: 0.8;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background-color: white;
+  color: black;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 220px;
+  z-index: 100;
+}
+
+.profile-dropdown p {
+  margin: 5px 0;
+}
+
+.profile-dropdown hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #ccc;
 }

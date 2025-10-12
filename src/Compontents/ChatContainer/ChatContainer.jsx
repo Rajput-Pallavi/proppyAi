@@ -2,6 +2,7 @@ import React from "react";
 import "./ChatContainer.css";
 import img from '../../assets/img.png';
 
+
 const ChatContainer = ({ outputText }) => {
   return (
     <div className="chat-container">
@@ -11,6 +12,7 @@ const ChatContainer = ({ outputText }) => {
       <div className="character-placeholder">
         <img src={img} alt="" />
       </div>
+    
     </div>
   );
 };

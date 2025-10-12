@@ -15,6 +15,7 @@ const SearchBar = ({ searchValue, setSearchValue, handleSearch }) => {
       <button className="search-arrow" onClick={handleSearch} tabIndex={-1}>
         &gt;
       </button>
+    
     </div>
   );
 };
