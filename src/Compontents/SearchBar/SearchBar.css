@@ -17,6 +17,7 @@
   transition: border-color 0.3s;
   box-sizing: border-box;
   margin-top: 70px;
+  padding: 20px;
 }
 
 .search-arrow {
@@ -33,3 +34,112 @@
   line-height: 1;
   z-index: 2;
 }
+
+/* Responsive Media Queries */
+
+/* Large Tablets and Small Desktops (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .search-bar input {
+    width: 450px;
+    font-size: 1.4rem;
+    padding: 18px;
+    margin-top: 170px;
+  }
+  
+  .search-arrow {
+    font-size: 1.9rem;
+    margin-top: 87px;
+    left: 650px;
+  }
+}
+
+/* Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  .search-bar {
+    margin: 2rem 0 1.5rem 0;
+    margin-top: 20px;
+  }
+  
+  .search-bar input {
+    width: 400px;
+    font-size: 1.3rem;
+    padding: 16px;
+    margin-top: 50px;
+    border-radius: 25px;
+  }
+  
+  .search-arrow {
+    right: calc(50% + 200px);
+    font-size: 1.8rem;
+    margin-top: 25px;
+    margin-right: -356px;
+  }
+}
+
+/* Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .search-bar {
+    margin: 1.5rem 0 1rem 0;
+    margin-top: 15px;
+  }
+  
+  .search-bar input {
+    width: 90vw;
+    font-size: 1.1rem;
+    padding: 14px;
+    margin-top: 40px;
+    border-radius: 20px;
+    width: 205px;
+  }
+  
+  .search-arrow {
+    right: calc(5vw + 10px);
+    font-size: 1.6rem;
+    margin-top: 20px;
+    left: -169px;
+  }
+}
+
+/* Small Mobile Devices (max-width: 320px) */
+@media (max-width: 320px) {
+  .search-bar {
+    margin: 1rem 0 0.5rem 0;
+    margin-top: 10px;
+  }
+  
+  .search-bar input {
+    width: 95vw;
+    font-size: 1rem;
+    padding: 12px;
+    margin-top: 30px;
+    border-radius: 18px;
+    border-width: 1.5px;
+  }
+  
+  .search-arrow {
+    right: calc(2.5vw + 8px);
+    font-size: 1.4rem;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 820px) {
+  
+  .search-arrow {
+    font-size: 1.4rem;
+    margin-top: 89px;
+    left: 560px;
+  }
+}
+@media (max-width: 912px) {
+ 
+  
+  
+  
+  .search-arrow {
+    font-size: 1.4rem;
+    margin-top: 25px;
+    left: 208px;
+  }
+}
+

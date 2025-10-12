@@ -16,30 +16,3 @@ margin: 0px;
 
 }
 
-.search-bar input {
-  width: 500px;
-  max-width: 90vw;
-  font-size: 1.5rem;
-  border-radius: 30px;
-  border: 2px solid #ff6b35;
-  outline: none;
-  transition: border-color 0.3s;
-  box-sizing: border-box;
-  margin-top: 30px;
-  padding: 22px 12px;
-}
-
-.search-arrow {
-  margin-top: 28px;
-  position: absolute;
-  right: 560px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #ff6b35;
-  cursor: pointer;
-  top: 50%;
-  transform: translateY(-50%);
-  line-height: 1;
-  z-index: 2;
-}
