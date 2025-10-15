@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"; // <- import
 import Sidebar from '../../Compontents/Sidebar/Sidebar.jsx';
 import NewChat from "../NewChat/NewChat";
 import Library from "../Library/Library";
+import Shorts from "../Shorts/Shorts";
 import "./MainApp.css";
 
 
@@ -48,6 +49,7 @@ const MainApp = () => {
   return (
     
     <div className="app-container">
+      
       <Sidebar
         sidebarOpen={sidebarOpen}
         currentPage={currentPage}
@@ -66,6 +68,8 @@ const MainApp = () => {
           />
         )}
         {currentPage === "library" && <Library />}
+        {currentPage === "shorts" && <Shorts />}
+        
        <div>
       
        </div>

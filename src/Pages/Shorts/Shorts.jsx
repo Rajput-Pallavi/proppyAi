@@ -2,16 +2,14 @@ import React from 'react'
 import './Shorts.css'
 import logo from '../../assets/logo.png'
 
-const Shorts = (setSearchValue, searchValue, handleSearch) => {
+const Shorts = () => {
   return (
     <div>
-     
       <div className='log'>
-     <img src={logo} alt="" />
+        <img src={logo} alt="Logo" />
       </div>
-     
- </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Shorts
+export default Shorts;

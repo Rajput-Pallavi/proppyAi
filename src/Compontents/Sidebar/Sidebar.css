@@ -12,24 +12,21 @@
   overflow: hidden;
 }
 
-/* Width for open/closed */
 .sidebar.open {
-  width: 260px;
+  width: 220px;
 }
 
 .sidebar.closed {
   width: 60px;
 }
 
-/* Header */
+/* Header with toggle button only */
 .sidebar-header {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: space-between;
   padding: 15px;
 }
-
-
 
 .toggle-btn {
   background: none;
@@ -38,6 +35,7 @@
   cursor: pointer;
   color: #111;
   transition: transform 0.2s ease;
+  margin-left: 10px; /* aligns with menu icons */
 }
 
 .toggle-btn:hover {
@@ -57,7 +55,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 15px 70px;
+  padding: 15px 20px;
   border: none;
   border-radius: 10px;
   background: transparent;
@@ -65,52 +63,72 @@
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: padding 0.3s ease, gap 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .menu-item:hover {
   background: rgba(149, 146, 146, 0.6);
   transform: translateX(3px);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px 79px;
 }
 
 .menu-item.active {
-  
   font-weight: 600;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.menu-item span {
-  font-size: 18px;
+/* Menu icon */
+.menu-item img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Closed sidebar - center icons */
+/* Menu text */
+.menu-item span {
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Closed sidebar - hide text but keep icon centered */
 .sidebar.closed .menu-item {
   justify-content: center;
-  padding: 12px;
+  padding: 15px;
+  gap: 0;
+  transition-delay: 0.3s;
 }
 
 .sidebar.closed .menu-item span {
-  margin: 0;
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
 }
 
-.sidebar.closed .menu-item:hover {
-  background: rgba(255, 255, 255, 0.7);
+/* Logout at bottom */
+.sidebar-logout {
+  margin-top: auto;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  transition: all 0.3s ease;
 }
 
-.rec{
-  margin-top: 150px;
-  width: 60px;
-  height: 30px;
-  font-size: 19px;
-  
-}
-img{
-  height: 20px;
-  width: 20px;
+.sidebar-logout p {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* Closed sidebar - keep logout position */
+.sidebar.closed .sidebar-logout {
+  justify-content: flex-start;
+}
+
+.sidebar.closed .sidebar-logout p {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
