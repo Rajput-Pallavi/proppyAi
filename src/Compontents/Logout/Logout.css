@@ -1,12 +1,13 @@
 .logout-container {
-  justify-items: left;
-  padding-left: 15px;
+  display: flex;
+  justify-content: flex-start;
 }
+
 .logout-btn {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 15px 0px;
+  padding: 15px;
   border: none;
   border-radius: 10px;
   background: transparent;
@@ -16,88 +17,39 @@
   cursor: pointer;
   transition: all 0.25s ease;
 }
-.logout-btn{
-    margin-top: 430px;
-}
-
-
 
 .icon {
   width: 30px;
   height: 30px;
 }
-p{
-  right: 10px;
-}
-/* Responsive Media Queries */
 
-/* Large Tablets and Small Desktops (max-width: 1024px) */
-@media (max-width: 1024px) {
-  .logout-btn {
-    margin-top: 350px;
-    font-size: 14px;
-    gap: 10px;
-  }
-  
-  .logout-container {
-    padding-left: 12px;
-  }
+.logout-btn p {
+  margin: 0;
 }
 
-/* Tablets (max-width: 768px) */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .logout-btn {
-    margin-top: 250px;
-    font-size: 14px;
-    padding: 12px 0px;
     gap: 10px;
+    padding: 12px;
+    font-size: 14px;
   }
   
   .icon {
     width: 26px;
     height: 26px;
   }
-  
-  .logout-container {
-    padding-left: 10px;
-  }
 }
 
-/* Mobile Devices (max-width: 480px) */
 @media (max-width: 480px) {
   .logout-btn {
-    margin-top: 150px;
-    font-size: 13px;
-    padding: 10px 0px;
     gap: 8px;
+    padding: 10px;
+    font-size: 13px;
   }
-  
+
   .icon {
     width: 24px;
     height: 24px;
   }
-  
-  .logout-container {
-    padding-left: 8px;
-  }
 }
-
-/* Small Mobile Devices (max-width: 320px) */
-@media (max-width: 320px) {
-  .logout-btn {
-    margin-top: 100px;
-    font-size: 12px;
-    padding: 8px 0px;
-    gap: 6px;
-  }
-  
-  .icon {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .logout-container {
-    padding-left: 6px;
-  }
-}
-

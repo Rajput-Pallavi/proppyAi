@@ -1,30 +1,34 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import MainApp from './Pages/MainApp/MainApp';
-import SignIn from'./Pages/SignIn/SignIn';
+import SignIn from './Pages/SignIn/SignIn';
 import Shorts from './Pages/Shorts/Shorts';
+import MainPage from './Pages/MainApp/MainApp';
+import Header from './Compontents/Header/Header';
 
+const AppContent = () => {
+  const location = useLocation();
 
-import MainPage from './Pages/MainApp/MainApp'; // <-- add this
+  // Check if current path is '/signin'
+  const hideHeader = location.pathname === '/signin';
+
+  return (
+    <>
+      {!hideHeader && <Header />}   {/* Header is hidden on SignIn page */}
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/shorts" element={<Shorts />} />
+        <Route path="/main" element={<MainPage />} />
+      </Routes>
+    </>
+  );
+};
 
 const App = () => {
   return (
     <Router>
-      <Routes>
-        {/* Default page */}
-        <Route path="/" element={<MainApp />} />
-
-        {/* Sign In page */}
-        <Route path="/signin" element={<SignIn />} />
-        
-        {/* Shorts In Page */}
-        <Route path="/shorts" element={<Shorts />} />
-
-        {/* Main page after login */}
-        <Route path="/main" element={<MainPage />} />
-        
-      </Routes>
-      
+      <AppContent />
     </Router>
   );
 };

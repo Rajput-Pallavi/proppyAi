@@ -3,14 +3,14 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #f0e8e0, #f4e5cc, #f3e4d6);
     overflow-x: hidden;
-}
+} 
 
 .main-content {
     padding: 20px;
     min-height: calc(100vh - 70px);
     transition: margin-left 0.3s ease;
 }
-* ✅ Responsive design */
+/* ✅ Responsive design */
 @media (max-width: 1024px) {
     .main-content {
         padding: 15px;

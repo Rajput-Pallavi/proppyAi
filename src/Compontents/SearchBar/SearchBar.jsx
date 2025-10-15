@@ -1,10 +1,12 @@
 import React from "react";
 import "./SearchBar.css";
+import { RiSearchEyeLine } from "react-icons/ri";
 
 const SearchBar = ({ searchValue, setSearchValue, handleSearch }) => {
   return (
     <div className="search-bar">
       <input
+        type="text"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         placeholder="Search..."
@@ -12,10 +14,9 @@ const SearchBar = ({ searchValue, setSearchValue, handleSearch }) => {
           if (e.key === "Enter") handleSearch();
         }}
       />
-      <button className="search-arrow" onClick={handleSearch} tabIndex={-1}>
-        &gt;
+      <button className="search-arrow" onClick={handleSearch}>
+        <RiSearchEyeLine size={22} />
       </button>
-    
     </div>
   );
 };
