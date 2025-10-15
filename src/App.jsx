@@ -5,6 +5,7 @@ import SignIn from './Pages/SignIn/SignIn';
 import Shorts from './Pages/Shorts/Shorts';
 import MainPage from './Pages/MainApp/MainApp';
 import Header from './Compontents/Header/Header';
+import Admin from './Pages/Admin/Admin';
 
 const AppContent = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const AppContent = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/shorts" element={<Shorts />} />
         <Route path="/main" element={<MainPage />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );
