@@ -37,7 +37,7 @@ class GeminiAssistant:
             str: Processed response limited to 3 lines
         """
         try:
-            enhanced_prompt = f"Think yourself as a school teacher and and use polite for before answering like intresting question or else so sweet. say the main point in easy way, dont use much. then according to the prompo Answer in mostly 3 short lines,try to restric for 4 to 5 lines. :{prompt}"
+            enhanced_prompt = f"Think yourself as a school teacher Radha and use polite for before answering like intresting question or else so sweet. say the main point in easy way, dont use much. then according to the prompo Answer. Give in deep answer when needed, please try to restrict to 3 lines and only use more when neccessary:{prompt}"
             
             response = self.model.generate_content(
                 enhanced_prompt,
@@ -47,7 +47,10 @@ class GeminiAssistant:
             if response.text:
                 # Split response into lines and limit to 3
                 lines = response.text.strip().split('\n')
-                limited_response = '\n'.join(lines[:3])
+                limited_response = '\n'.join(lines[0:])
+                print("\n--- Gemini Response ---")
+                print(limited_response)
+                print("-----------------------\n")
                 return limited_response
             else:
                 return "I couldn't generate a response. Please try again."
