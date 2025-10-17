@@ -9,7 +9,10 @@ from mysql.connector import Error
 import bcrypt
 import re
 import dns.resolver
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from datetime import datetime
 
 # Gemini Import
 from gemini_service import create_gemini_assistant
@@ -19,6 +22,15 @@ from gemini_service import create_gemini_assistant
 # ------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
+
+# ------------------------------------------------------
+# Cloudinary Configuration
+# ------------------------------------------------------
+cloudinary.config(
+    cloud_name='dsk2vrb6n',
+    api_key='936624974351843',      # Replace with your API Key
+    api_secret='YThqcZ6c87XahzLyeu4bM_FA4s8'  # Replace with your API Secret
+)
 
 # ------------------------------------------------------
 # Gemini Assistant Setup
@@ -60,6 +72,7 @@ def is_valid_email(email):
         return bool(records)
     except Exception:
         return False
+
 # ------------------------------------------------------
 # Gemini Routes
 # ------------------------------------------------------
@@ -97,7 +110,6 @@ def search():
             'result': None
         }), 500
 
-
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({
@@ -105,7 +117,6 @@ def health_check():
         'assistant_ready': assistant is not None,
         'db_connected': db.is_connected() if db else False
     })
-
 
 # ------------------------------------------------------
 # Signup Route (Auth)
@@ -169,8 +180,6 @@ def login():
                     "id": user[0],
                     "name": user[1],
                     "email": user[2],
-                  
-                    
                 }
             }), 200
         else:
@@ -181,22 +190,216 @@ def login():
         return jsonify({"error": str(e)}), 500
 
 # ------------------------------------------------------
+# Cloudinary Video Management Routes
+# ------------------------------------------------------
+
+@app.route('/api/videos', methods=['GET'])
+def get_videos():
+    """
+    Fetch all videos from Cloudinary shorts folder
+    """
+    try:
+        # Fetch videos from Cloudinary
+        result = cloudinary.api.resources(
+            type='upload',
+            resource_type='video',
+            prefix='shorts/',
+            max_results=100
+        )
+        
+        videos = []
+        for resource in result.get('resources', []):
+            videos.append({
+                'id': resource['public_id'],
+                'url': resource['secure_url'],
+                'publicId': resource['public_id'],
+                'format': resource.get('format', 'mp4'),
+                'resourceType': 'video',
+                'width': resource.get('width', 1080),
+                'height': resource.get('height', 1920),
+                'size': round(resource.get('bytes', 0) / (1024 * 1024), 2),  # MB
+                'thumbnail': resource['secure_url'].replace('/upload/', '/upload/so_1,w_400,h_400,c_fill/').replace(f".{resource.get('format', 'mp4')}", '.jpg'),
+                'createdAt': resource.get('created_at', datetime.now().isoformat())
+            })
+        
+        print(f"✅ Fetched {len(videos)} videos from Cloudinary")
+        
+        return jsonify({
+            'success': True,
+            'videos': videos,
+            'count': len(videos)
+        }), 200
+        
+    except Exception as e:
+        print(f"❌ Error fetching videos: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'videos': []
+        }), 500
+
+
+@app.route('/api/videos/<path:public_id>', methods=['DELETE'])
+def delete_video(public_id):
+    """
+    Delete a video from Cloudinary
+    """
+    try:
+        print(f"🗑️ Deleting video: {public_id}")
+        
+        # Delete from Cloudinary
+        result = cloudinary.uploader.destroy(
+            public_id,
+            resource_type='video',
+            invalidate=True
+        )
+        
+        if result.get('result') == 'ok':
+            print(f"✅ Video deleted successfully: {public_id}")
+            
+            # Also delete from database if exists
+            if db and cursor:
+                try:
+                    cursor.execute("DELETE FROM videos WHERE public_id = %s", (public_id,))
+                    db.commit()
+                except:
+                    pass
+            
+            return jsonify({
+                'success': True,
+                'message': 'Video deleted successfully'
+            }), 200
+        else:
+            print(f"⚠️ Cloudinary delete returned: {result}")
+            return jsonify({
+                'success': False,
+                'error': 'Failed to delete video from Cloudinary',
+                'result': result
+            }), 500
+            
+    except Exception as e:
+        print(f"❌ Error deleting video: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
+@app.route('/api/videos/save', methods=['POST'])
+def save_video_metadata():
+    """
+    Save video metadata to MySQL database (optional)
+    """
+    if not db or not cursor:
+        return jsonify({"error": "Database not connected"}), 500
+    
+    try:
+        data = request.get_json()
+        public_id = data.get('publicId')
+        url = data.get('url')
+        format_type = data.get('format')
+        resource_type = data.get('resourceType')
+        size = data.get('size')
+        created_at = data.get('createdAt')
+        
+        print(f"💾 Saving video metadata: {public_id}")
+        
+        # Create videos table if not exists
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS videos (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                public_id VARCHAR(255) UNIQUE NOT NULL,
+                url VARCHAR(500) NOT NULL,
+                format VARCHAR(50),
+                resource_type VARCHAR(50),
+                size_mb DECIMAL(10, 2),
+                created_at DATETIME,
+                uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        
+        # Insert video metadata
+        cursor.execute("""
+            INSERT INTO videos (public_id, url, format, resource_type, size_mb, created_at)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE url = %s
+        """, (public_id, url, format_type, resource_type, size, created_at, url))
+        
+        db.commit()
+        
+        print(f"✅ Video metadata saved: {public_id}")
+        
+        return jsonify({
+            'success': True,
+            'message': 'Video metadata saved to database'
+        }), 201
+        
+    except Exception as e:
+        print(f"❌ Error saving video metadata: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+
+@app.route('/api/videos/stats', methods=['GET'])
+def get_video_stats():
+    """
+    Get video statistics
+    """
+    try:
+        result = cloudinary.api.resources(
+            type='upload',
+            resource_type='video',
+            prefix='shorts/',
+            max_results=500
+        )
+        
+        total_videos = len(result.get('resources', []))
+        total_size = sum(r.get('bytes', 0) for r in result.get('resources', []))
+        total_size_mb = round(total_size / (1024 * 1024), 2)
+        
+        return jsonify({
+            'success': True,
+            'stats': {
+                'totalVideos': total_videos,
+                'totalSizeMB': total_size_mb,
+                'averageSizeMB': round(total_size_mb / total_videos, 2) if total_videos > 0 else 0
+            }
+        }), 200
+        
+    except Exception as e:
+        print(f"❌ Error fetching stats: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+# ------------------------------------------------------
 # Root Endpoint
 # ------------------------------------------------------
 @app.route('/', methods=['GET'])
 def root():
     return jsonify({
-        'message': 'Merged Flask API',
+        'message': 'Merged Flask API with Cloudinary Integration',
         'endpoints': [
-            {'method': 'POST', 'path': '/api/search'},
-            {'method': 'GET', 'path': '/api/health'},
-            {'method': 'POST', 'path': '/signup'}
-        ]
+            {'method': 'POST', 'path': '/api/search', 'description': 'Gemini search'},
+            {'method': 'GET', 'path': '/api/health', 'description': 'Health check'},
+            {'method': 'POST', 'path': '/signup', 'description': 'User signup'},
+            {'method': 'POST', 'path': '/login', 'description': 'User login'},
+            {'method': 'GET', 'path': '/api/videos', 'description': 'Get all videos'},
+            {'method': 'DELETE', 'path': '/api/videos/<public_id>', 'description': 'Delete video'},
+            {'method': 'POST', 'path': '/api/videos/save', 'description': 'Save video metadata'},
+            {'method': 'GET', 'path': '/api/videos/stats', 'description': 'Get video statistics'}
+        ],
+        'cloudinary_configured': True,
+        'cloud_name': 'dsk2vrb6n'
     })
 
 # ------------------------------------------------------
 # Run Server
 # ------------------------------------------------------
 if __name__ == '__main__':
-    print("🚀 Starting merged Flask server on port 5000")
+    print("🚀 Starting merged Flask server with Cloudinary on port 5000")
+    print("📹 Cloudinary Cloud Name: dsk2vrb6n")
     app.run(debug=True, port=5000)
