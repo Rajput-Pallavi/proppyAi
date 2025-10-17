@@ -9,12 +9,39 @@ const AdminUpload = () => {
   const widgetRef = useRef();
   const navigate = useNavigate();
 
-  // Replace with your actual Cloudinary credentials
-  const CLOUD_NAME = 'your_cloud_name';
-  const UPLOAD_PRESET = 'your_upload_preset'; // Create this in Cloudinary dashboard
+  // Flask API URL
+  const API_BASE_URL = 'http://localhost:5000';
+
+  // Cloudinary credentials
+  const CLOUD_NAME = 'dsk2vrb6n';
+  const UPLOAD_PRESET = 'proppyAI';
+
+  // **CHANGED: Fetch videos from Flask backend**
+  useEffect(() => {
+    fetchExistingVideos();
+  }, []);
+
+  const fetchExistingVideos = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/videos`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        setUploadedVideos(data.videos || []);
+        console.log('✅ Loaded videos from backend:', data.count);
+      } else {
+        console.error('Failed to fetch videos from backend');
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      alert('Failed to load videos. Make sure Flask server is running on port 5000');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Load Cloudinary Upload Widget script
     if (!window.cloudinary) {
       const script = document.createElement('script');
       script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
@@ -37,15 +64,15 @@ const AdminUpload = () => {
         {
           cloudName: CLOUD_NAME,
           uploadPreset: UPLOAD_PRESET,
-          sources: ['local', 'url', 'camera'], // Upload sources
-          multiple: true, // Allow multiple uploads
+          sources: ['local', 'url', 'camera'],
+          multiple: true,
           maxFiles: 10,
-          resourceType: 'auto', // Automatically detect video/image
-          clientAllowedFormats: ['mp4', 'mov', 'avi', 'webm', 'jpg', 'png', 'gif'], // Allowed formats
-          maxFileSize: 104857600, // 100MB max file size
-          maxVideoFileSize: 104857600, // 100MB for videos
+          resourceType: 'auto',
+          clientAllowedFormats: ['mp4', 'mov', 'avi', 'webm', 'jpg', 'png', 'gif'],
+          maxFileSize: 104857600,
+          maxVideoFileSize: 104857600,
           cropping: false,
-          folder: 'shorts', // Cloudinary folder name
+          folder: 'shorts',
           tags: ['shorts', 'uploaded-from-admin'],
           context: {
             alt: 'shorts_video',
@@ -70,10 +97,11 @@ const AdminUpload = () => {
           }
         },
         (error, result) => {
+          console.log('Widget event:', result);
+          
           if (!error && result && result.event === 'success') {
             console.log('Upload successful!', result.info);
             
-            // Add uploaded video to the list
             const uploadedFile = {
               id: result.info.public_id,
               url: result.info.secure_url,
@@ -82,14 +110,16 @@ const AdminUpload = () => {
               resourceType: result.info.resource_type,
               width: result.info.width,
               height: result.info.height,
-              size: (result.info.bytes / (1024 * 1024)).toFixed(2), // Size in MB
-              thumbnail: result.info.thumbnail_url,
+              size: (result.info.bytes / (1024 * 1024)).toFixed(2),
+              thumbnail: result.info.thumbnail_url || 
+                `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/so_1,w_400,h_400,c_fill/${result.info.public_id}.jpg`,
               createdAt: result.info.created_at
             };
 
+            // **CHANGED: Use functional update**
             setUploadedVideos(prev => [uploadedFile, ...prev]);
             
-            // Save to your backend/database
+            // Save to Flask backend
             saveToDatabase(uploadedFile);
           }
           
@@ -108,14 +138,13 @@ const AdminUpload = () => {
     }
   };
 
+  // **CHANGED: Save to Flask backend**
   const saveToDatabase = async (fileData) => {
     try {
-      // Replace with your actual API endpoint
-      const response = await fetch('YOUR_BACKEND_API/videos', {
+      const response = await fetch(`${API_BASE_URL}/api/videos/save`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
         },
         body: JSON.stringify({
           publicId: fileData.publicId,
@@ -127,16 +156,17 @@ const AdminUpload = () => {
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to save to database');
+      if (response.ok) {
+        console.log('✅ Saved to database successfully');
+      } else {
+        console.error('Failed to save to database');
       }
-
-      console.log('Saved to database successfully');
     } catch (error) {
       console.error('Database save error:', error);
     }
   };
 
+  // **CHANGED: Delete via Flask backend**
   const deleteVideo = async (publicId) => {
     if (!window.confirm('Are you sure you want to delete this video?')) {
       return;
@@ -145,25 +175,25 @@ const AdminUpload = () => {
     setIsLoading(true);
     
     try {
-      // Call your backend to delete from Cloudinary and database
-      const response = await fetch(`YOUR_BACKEND_API/videos/${publicId}`, {
+      // Encode the public_id for URL
+      const encodedId = encodeURIComponent(publicId);
+      
+      const response = await fetch(`${API_BASE_URL}/api/videos/${encodedId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-        }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete video');
-      }
+      const data = await response.json();
 
-      // Remove from local state
-      setUploadedVideos(prev => prev.filter(video => video.publicId !== publicId));
-      alert('Video deleted successfully!');
+      if (data.success) {
+        setUploadedVideos(prev => prev.filter(video => video.publicId !== publicId));
+        alert('✅ Video deleted successfully!');
+      } else {
+        alert('❌ Failed to delete video: ' + data.error);
+      }
       
     } catch (error) {
       console.error('Delete error:', error);
-      alert('Failed to delete video: ' + error.message);
+      alert('❌ Failed to delete video: ' + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -176,6 +206,11 @@ const AdminUpload = () => {
 
   const handleBackToHome = () => {
     navigate('/');
+  };
+
+  // **NEW: Manual refresh button**
+  const handleRefresh = () => {
+    fetchExistingVideos();
   };
 
   return (
@@ -232,6 +267,13 @@ const AdminUpload = () => {
         <div className="videos-section">
           <div className="section-header">
             <h2>Uploaded Content ({uploadedVideos.length})</h2>
+            {/* **NEW: Refresh button** */}
+            <button className="refresh-btn" onClick={handleRefresh} disabled={isLoading}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              {isLoading ? 'Loading...' : 'Refresh'}
+            </button>
           </div>
 
           {uploadedVideos.length === 0 ? (

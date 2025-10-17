@@ -5,56 +5,62 @@ import logo from '../../assets/logo.png';
 
 const Shorts = () => {
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [videosData, setVideosData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const videoRefs = useRef([]);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Replace with your actual Cloudinary cloud name
-  const CLOUD_NAME = 'your_cloud_name';
+  // Flask API URL
+  const API_BASE_URL = 'http://localhost:5000';
 
-  // Sample video data - replace with data from your backend/database
-  const videosData = [
-    {
-      id: 1,
-      public_id: 'shorts/video1',
-      username: 'user1',
-      description: 'Amazing content! #shorts',
-      likes: '12K',
-      comments: '234',
-      profilePic: 'https://via.placeholder.com/50'
-    },
-    {
-      id: 2,
-      public_id: 'shorts/video2',
-      username: 'user2',
-      description: 'Check this out! #viral',
-      likes: '45K',
-      comments: '890',
-      profilePic: 'https://via.placeholder.com/50'
-    },
-    {
-      id: 3,
-      public_id: 'shorts/video3',
-      username: 'user3',
-      description: 'Trending now! #fyp',
-      likes: '23K',
-      comments: '456',
-      profilePic: 'https://via.placeholder.com/50'
+  // Fetch videos from Flask backend on mount
+  useEffect(() => {
+    fetchVideos();
+  }, []);
+
+  const fetchVideos = async () => {
+    setIsLoading(true);
+    try {
+      console.log('🔍 Fetching videos from Flask backend...');
+      
+      const response = await fetch(`${API_BASE_URL}/api/videos`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Received data:', data);
+        
+        if (data.videos && data.videos.length > 0) {
+          const videos = data.videos.map((resource, index) => ({
+            id: index + 1,
+            public_id: resource.publicId,
+            url: resource.url,
+            username: 'user' + (index + 1),
+            description: 'Amazing content! #shorts #viral #trending',
+            likes: Math.floor(Math.random() * 100) + 'K',
+            comments: Math.floor(Math.random() * 1000),
+            profilePic: `https://ui-avatars.com/api/?name=User${index + 1}&background=667eea&color=fff&size=50`
+          }));
+
+          setVideosData(videos);
+          console.log('✅ Loaded videos in Shorts:', videos.length);
+        } else {
+          console.log('⚠️ No videos found in response');
+        }
+      } else {
+        console.error('❌ Failed to fetch videos. Status:', response.status);
+        alert('Failed to load videos. Make sure Flask server is running on port 5000');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching videos:', error);
+      alert('Cannot connect to Flask server. Make sure it\'s running on http://localhost:5000');
+    } finally {
+      setIsLoading(false);
     }
-  ];
-
-  // Generate Cloudinary video URL with transformations
-  const getCloudinaryVideoUrl = (publicId) => {
-    return `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/` +
-           `q_auto,` +
-           `f_auto,` +
-           `c_fill,w_1080,h_1920,g_auto/` +
-           `${publicId}.mp4`;
   };
 
-  // Handle back button click
   const handleBackClick = () => {
-    navigate(-1); // Go back to previous page
+    navigate(-1);
   };
 
   // Handle video play/pause based on visibility
@@ -71,7 +77,7 @@ const Shorts = () => {
     });
   }, [currentVideo]);
 
-  // Intersection Observer for auto-play on scroll
+  // Intersection Observer for auto-play
   useEffect(() => {
     const options = {
       root: null,
@@ -101,9 +107,8 @@ const Shorts = () => {
         if (video) observer.unobserve(video);
       });
     };
-  }, []);
+  }, [videosData]);
 
-  // Toggle play/pause on video click
   const handleVideoClick = (index) => {
     const video = videoRefs.current[index];
     if (video) {
@@ -131,9 +136,50 @@ const Shorts = () => {
     console.log('View profile:', username);
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="shorts-container">
+        <div className="loading-screen">
+          <div className="spinner"></div>
+          <p>Loading Shorts...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (videosData.length === 0) {
+    return (
+      <div className="shorts-container">
+        <div className="shorts-header">
+          <button className="back-button" onClick={handleBackClick}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <img src={logo} alt="Logo" className="shorts-logo" />
+          <h2>Shorts</h2>
+        </div>
+        <div className="empty-shorts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <h3>No Shorts Available</h3>
+          <p>Upload some videos from the admin panel!</p>
+          <button className="refresh-shorts-btn" onClick={fetchVideos}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="shorts-container" ref={containerRef}>
-      {/* Header with Back Button */}
       <div className="shorts-header">
         <button className="back-button" onClick={handleBackClick}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -144,32 +190,26 @@ const Shorts = () => {
         <h2>Shorts</h2>
       </div>
 
-      {/* Video Feed */}
       <div className="shorts-feed">
         {videosData.map((video, index) => (
           <div key={video.id} className="short-video-wrapper">
-            {/* Cloudinary Video Element */}
             <video
               ref={(el) => (videoRefs.current[index] = el)}
               className="short-video"
-              src={getCloudinaryVideoUrl(video.public_id)}
+              src={video.url}
               loop
               playsInline
               preload="metadata"
               onClick={() => handleVideoClick(index)}
             />
 
-            {/* Video Overlay - Info & Controls */}
             <div className="video-overlay">
-              {/* Bottom Info Section */}
               <div className="video-info">
                 <p className="video-username">@{video.username}</p>
                 <p className="video-description">{video.description}</p>
               </div>
 
-              {/* Side Action Buttons */}
               <div className="video-actions">
-                {/* Profile Button */}
                 <button 
                   className="action-btn profile-btn"
                   onClick={() => handleProfileClick(video.username)}
@@ -180,7 +220,6 @@ const Shorts = () => {
                   <div className="follow-icon">+</div>
                 </button>
 
-                {/* Like Button */}
                 <button 
                   className="action-btn" 
                   onClick={() => handleLike(video.id)}
@@ -191,7 +230,6 @@ const Shorts = () => {
                   <span>{video.likes}</span>
                 </button>
 
-                {/* Comment Button */}
                 <button 
                   className="action-btn"
                   onClick={() => handleComment(video.id)}
@@ -202,7 +240,6 @@ const Shorts = () => {
                   <span>{video.comments}</span>
                 </button>
 
-                {/* Share Button */}
                 <button 
                   className="action-btn"
                   onClick={() => handleShare(video.id)}
@@ -215,7 +252,6 @@ const Shorts = () => {
                   <span>Share</span>
                 </button>
 
-                {/* More Options Button */}
                 <button className="action-btn">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <circle cx="12" cy="12" r="1" strokeWidth="2"/>
