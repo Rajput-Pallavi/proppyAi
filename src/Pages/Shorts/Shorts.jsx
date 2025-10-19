@@ -12,7 +12,9 @@ const Shorts = () => {
   const navigate = useNavigate();
 
   // Flask API URL
-  const API_BASE_URL = 'http://localhost:5000';
+    const BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://127.0.0.1:5000'   // Local backend
+  : 'https://proppyai.onrender.com'; // Deployed backend
 
   // Fetch videos from Flask backend on mount
   useEffect(() => {
