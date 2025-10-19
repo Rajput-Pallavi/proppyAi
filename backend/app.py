@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../backend'))
-
+port = int(os.environ.get("PORT", 5000))
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 import mysql.connector
@@ -536,4 +536,4 @@ if __name__ == '__main__':
     print("🚀 Starting merged Flask server on port 5000")
     print("📊 Features: Gemini AI, Auth, Questions DB, Cloudinary Videos")
     print("💾 Connection pooling enabled (pool size: 10)")
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=port, debug=False)

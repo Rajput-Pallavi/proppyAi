@@ -22,6 +22,11 @@ const MainApp = () => {
     };
     window.speechSynthesis.onvoiceschanged = updateVoices;
     updateVoices();
+    
+    // Cleanup on unmount
+    return () => {
+      window.speechSynthesis.cancel();
+    };
   }, []);
 
   // Detect language from text (simple Unicode block detection)
@@ -52,16 +57,27 @@ const MainApp = () => {
     return voice;
   };
 
-  // TTS for answer
+  // TTS for answer with cleanup
   useEffect(() => {
-    if (outputText) {
+    if (outputText && voices.length > 0) {
       const langCode = detectLanguage(outputText);
       const voice = getFemaleVoiceForLang(langCode);
       const utterance = new window.SpeechSynthesisUtterance(outputText);
-      utterance.voice = voice;
+      if (voice) {
+        utterance.voice = voice;
+      }
+      
+      utterance.onerror = (event) => {
+        console.error('Speech synthesis error:', event.error);
+      };
+      
       window.speechSynthesis.speak(utterance);
     }
-  }, [outputText]);
+    
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, [outputText, voices]);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -79,26 +95,49 @@ const MainApp = () => {
   const handleSearch = async () => {
     if (!searchValue) return;
     
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    // Small delay to ensure cancellation completes
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     // TTS for question
-    if (searchValue) {
+    if (searchValue && voices.length > 0) {
       const langCode = detectLanguage(searchValue);
       const voice = getFemaleVoiceForLang(langCode);
       const questionUtterance = new window.SpeechSynthesisUtterance(searchValue);
-      questionUtterance.voice = voice;
+      if (voice) {
+        questionUtterance.voice = voice;
+      }
+      
+      questionUtterance.onerror = (event) => {
+        console.error('Question speech error:', event.error);
+      };
+      
       window.speechSynthesis.speak(questionUtterance);
     }
     
+    // Determine backend URL based on host
+    const API_URL = window.location.hostname === "localhost"
+      ? "http://localhost:5000"
+      : "https://proppyai.onrender.com";
+      
     try {
-      const API_URL = "https://your-backend.onrender.com";
-      const response = await fetch(`${API_URL}/api/search`, ... {
+      const response = await fetch(`${API_URL}/api/search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: searchValue }),
       });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setOutputText(data.result);
     } catch (error) {
-      setOutputText("Error connecting to backend.");
+      console.error("Backend connection error:", error);
+      setOutputText("Error connecting to backend. Please check if the server is running.");
     }
   };
 
