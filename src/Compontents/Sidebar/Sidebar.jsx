@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import Chats from "../Chats/Chats";
 import Logout from "../Logout/Logout";
-import cha from '../../assets/Chat.png';
+import cha from '../../assets/chat.png';
 import book from '../../assets/book.png';
 import { useNavigate } from "react-router-dom";
 
