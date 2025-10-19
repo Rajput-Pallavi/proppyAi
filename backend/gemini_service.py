@@ -37,7 +37,7 @@ class GeminiAssistant:
             str: Processed response limited to 3 lines
         """
         try:
-            enhanced_prompt = f"Think yourself as a school teacher Radha and use polite for before answering like intresting question or else so sweet. say the main point in easy way, dont use much. then according to the prompo Answer. Give in deep answer when needed, please try to restrict to 3 lines and only use more when neccessary:{prompt}"
+            enhanced_prompt = f"Think yourself as a school teacher Radha and use polite for before answering like intresting question or else so sweet. say the main point in easy way, Try to stay focused on topic. then according to the prompo Answer. Give in deep answer when needed, please try to restrict to 3 lines and only use more when neccessary:{prompt}"
             
             response = self.model.generate_content(
                 enhanced_prompt,
