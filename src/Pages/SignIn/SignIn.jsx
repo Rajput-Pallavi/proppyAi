@@ -5,6 +5,9 @@ import './SignIn.css';
 import img from '../../assets/img.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
+// Backend URL - automatically picks local or production based on env
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:5000';
+
 export default function ProppySignIn() {
   const [isSignIn, setIsSignIn] = useState(true);
 
@@ -41,7 +44,7 @@ export default function ProppySignIn() {
     }
 
     try {
-      const res = await axios.post('http://127.0.0.1:5000/signup', {
+      const res = await axios.post(`${BACKEND_URL}/signup`, {
         name: signupData.name,
         email: signupData.email,
         password: signupData.password,
@@ -61,12 +64,12 @@ export default function ProppySignIn() {
   const handleLogin = async () => {
     setLoginError(""); // clear previous error
     try {
-      const res = await axios.post('http://127.0.0.1:5000/login', {
+      const res = await axios.post(`${BACKEND_URL}/login`, {
         email: loginData.email,
         password: loginData.password
       });
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      window.location.href = '/main'; // redirect immediately, no alert
+      window.location.href = '/main'; // redirect immediately
     } catch (err) {
       setLoginError(err.response?.data?.error || 'Invalid email or password');
     }
@@ -102,9 +105,7 @@ export default function ProppySignIn() {
           <h1 className="brand-title">Propy AI</h1>
 
           {isSignIn ? (
-            // -----------------------------
             // Sign In Form
-            // -----------------------------
             <div className={`form-wrapper ${loginError ? 'shake' : ''}`}>
               <h2 className="form-title">Sign in to Propy</h2>
               <p className="form-subtitle">Welcome back!</p>
@@ -123,7 +124,7 @@ export default function ProppySignIn() {
                 </div>
               </div>
 
-              {/* Password with Eye Icon */}
+              {/* Password */}
               <div className="input-group">
                 <div className="input-wrapper">
                   <span className="input-icon">🔒</span>
@@ -143,7 +144,7 @@ export default function ProppySignIn() {
                 </div>
               </div>
 
-              {/* Inline error message */}
+              {/* Inline error */}
               {loginError && <div className="error-text">{loginError}</div>}
 
               <div className="form-options">
@@ -163,9 +164,7 @@ export default function ProppySignIn() {
               </div>
             </div>
           ) : (
-            // -----------------------------
             // Signup Form
-            // -----------------------------
             <div className="form-wrapper">
               <h2 className="form-title">Create New Account</h2>
               <p className="form-subtitle">Join Propy today</p>
