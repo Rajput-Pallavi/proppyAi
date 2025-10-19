@@ -12,7 +12,7 @@ const Shorts = () => {
   const navigate = useNavigate();
 
   // Flask API URL
-    const BASE_URL = window.location.hostname === 'localhost'
+    const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://127.0.0.1:5000'   // Local backend
   : 'https://proppyai.onrender.com'; // Deployed backend
 
