@@ -17,7 +17,6 @@ import traceback
 
 # Gemini Import
 from gemini_service import create_gemini_assistant
-
 # ------------------------------------------------------
 # Initialize Flask
 # ------------------------------------------------------
