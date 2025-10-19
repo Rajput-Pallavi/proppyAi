@@ -89,7 +89,8 @@ const MainApp = () => {
     }
     
     try {
-      const response = await fetch("http://localhost:5000/api/search", {
+      const API_URL = "https://your-backend.onrender.com";
+      const response = await fetch(`${API_URL}/api/search`, ... {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: searchValue }),
