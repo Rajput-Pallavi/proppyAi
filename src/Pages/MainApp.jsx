@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Sidebar from '../../Compontents/Sidebar.jsx';
-import NewChat from "../NewChat/NewChat";
-import Library from "../Library/Library";
-import Shorts from "../Shorts/Shorts";
-import "./MainApp.css";
+import Sidebar from '../Compontents/Sidebar.jsx';
+import NewChat from "./NewChat";
+import Library from "./Library.jsx";
+import Shorts from "./Shorts.jsx";
+
 
 const MainApp = () => {
   const navigate = useNavigate();
