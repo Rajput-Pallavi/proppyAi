@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Sidebar from '../../Compontents/Sidebar/Sidebar.jsx';
+import Sidebar from '../../Compontents/Sidebar.jsx';
 import NewChat from "../NewChat/NewChat";
 import Library from "../Library/Library";
 import Shorts from "../Shorts/Shorts";

@@ -14,6 +14,7 @@ import cloudinary.uploader
 import cloudinary.api
 from datetime import datetime
 import traceback
+import chromadb
 
 # Gemini Import
 from gemini_service import create_gemini_assistant
@@ -32,6 +33,12 @@ cloudinary.config(
     api_secret='YThqcZ6c87XahzLyeu4bM_FA4s8'
 )
 
+  
+client = chromadb.CloudClient(
+  api_key='ck-6sThiA6ss9L56PFEroy5jicZUuWr7jXQMCohrhifWEAy',
+  tenant='382f93f5-f591-4437-b707-152ac0d24a04',
+  database='proppyai'
+)
 # ------------------------------------------------------
 # Gemini Assistant Setup
 # ------------------------------------------------------

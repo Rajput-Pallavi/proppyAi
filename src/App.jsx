@@ -4,8 +4,8 @@ import MainApp from './Pages/MainApp/MainApp';
 import SignIn from './Pages/SignIn/SignIn';
 import Shorts from './Pages/Shorts/Shorts';
 import MainPage from './Pages/MainApp/MainApp';
-import Header from './Compontents/Header/Header';
-import Admin from './Pages/Admin/Admin';
+import Header from './Compontents/Header';
+import Admin from './Pages/Admin';
 
 const AppContent = () => {
   const location = useLocation();

@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from '../../Compontents/SearchBar/SearchBar.jsx';
-import ChatContainer from '../../Compontents/ChatContainer/ChatContainer.jsx';
+import SearchBar from '../../Compontents/SearchBar.jsx';
+import ChatContainer from '../../Compontents/ChatContainer.jsx';
 import "./NewChat.css";
 
 const NewChat = ({ searchValue, setSearchValue, handleSearch, outputText }) => {
