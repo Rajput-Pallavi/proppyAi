@@ -7,13 +7,14 @@ import MainPage from './Pages/MainApp';
 import Header from './Compontents/Header';
 import Admin from './Pages/Admin';
 import Test from './Pages/test';
+import Home from './Pages/home';
 import './index.css';
 
 const AppContent = () => {
   const location = useLocation();
 
   // Check if current path is '/signin'
-  const hideHeader = location.pathname === '/signin';
+  const hideHeader = location.pathname === '/signin' || location.pathname === '/home';
 
   return (
     <>
@@ -25,6 +26,7 @@ const AppContent = () => {
         <Route path="/main" element={<MainPage />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </>
   );

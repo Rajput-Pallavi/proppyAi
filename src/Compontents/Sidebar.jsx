@@ -3,6 +3,7 @@ import Chats from "./Chats";
 import Logout from "./Logout";
 import cha from '../assets/chat.png';
 import book from '../assets/book.png';
+import logo from '../assets/main.png';
 
 const Sidebar = ({ currentPage, showPage }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,12 +18,12 @@ const Sidebar = ({ currentPage, showPage }) => {
     >
       {/* Header with toggle */}
       <div className="flex items-center p-4">
-        <div className="text-xl font-bold">{isOpen && "Logo"}</div>
+        <div className="text-xl font-bold">{isOpen  }</div>
         <button
           className="ml-2 text-2xl cursor-pointer transition-transform duration-200 hover:scale-125"
           onClick={toggleSidebar}
         >
-          {isOpen ? "✖" : "☰"}
+          {isOpen ? "☰" : "☰"}
         </button>
       </div>
 
