@@ -1,30 +1,39 @@
 import React from "react";
-import img from '../assets/img.png';
+import img from "../assets/img.png";
 
 const ChatContainer = ({ outputText }) => {
   return (
-    <div className="relative w-full min-h-[400px] flex items-center justify-center p-5 
-                    sm:min-h-[300px] sm:p-2">
+    <div className="relative w-full min-h-[80vh] flex flex-col items-center justify-center bg-white overflow-hidden">
       {/* Chat Area */}
-      <div className="relative w-3/5 h-[450px] bg-[#2d5a2d] rounded-lg shadow-md flex items-center justify-center p-4 mt-8
-                      lg:w-3/4 lg:h-[460px] lg:mt-4 lg:ml-20
-                      md:w-4/5 md:h-[280px] md:mt-[-60px] md:ml-9 md:p-3
-                      sm:w-3/4 sm:h-[240px] sm:mt-[-40px] sm:p-2
-                      xs:w-full xs:h-[200px] xs:mt-[-30px] xs:p-2">
-        <div className="text-white text-lg text-center break-words
-                        lg:text-base md:text-sm sm:text-[0.9rem] xs:text-[0.85rem]">
+      <div
+        className="relative w-[85%] max-w-[800px] bg-[#2d5a2d] rounded-xl shadow-xl flex items-center justify-center p-6
+                    text-center transition-all duration-300
+                    sm:h-[200px]
+                    md:h-[260px]
+                    lg:h-[320px]
+                    xl:h-[380px]"
+      >
+        <div className="text-white text-sm sm:text-base md:text-lg lg:text-xl break-words">
           {outputText}
         </div>
       </div>
 
-      {/* Character Placeholder */}
-      <div className="absolute right-0 bottom-0 pointer-events-none z-20">
-        <img src={img} alt=""
-             className="block object-contain h-[480px] mr-16
-                        lg:h-[490px] lg:mr-[-16px]
-                        md:h-[340px] md:mr-[-18px] md:mb-20
-                        sm:h-[250px] sm:mr-[-14px] sm:mb-10
-                        xs:h-[150px] xs:mr-[-8px] xs:mb-12" />
+      {/* Character Image */}
+      <div
+        className="absolute bottom-0 right-6 md:right-10 lg:right-16 xl:right-20 
+                   flex justify-end items-end pointer-events-none z-10"
+      >
+        <img
+          src={img}
+          alt="Character"
+          className="object-contain 
+                     h-[120px]
+                     sm:h-[160px]
+                     md:h-[220px]
+                     lg:h-[280px]
+                     xl:h-[340px]
+                     translate-y-2 sm:translate-y-4 md:translate-y-6"
+        />
       </div>
     </div>
   );

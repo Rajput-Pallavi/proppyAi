@@ -28,11 +28,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full bg-[#f3d993] text-[#131313] flex flex-col md:flex-row items-center md:justify-between p-3 md:p-5 relative font-poppins">
+    <header className="w-full bg-[#fffafa] text-[#131313] flex flex-col md:flex-row items-center md:justify-between p-3 md:p-5 relative font-poppins">
       {/* Logo */}
-      <div className="text-2xl font-bold mb-2 md:mb-0 text-center md:text-left">
-        Logo
-      </div>
+     
 
       {/* Center Nav */}
       <div className="flex gap-10 justify-center flex-1 mb-2 md:mb-0">

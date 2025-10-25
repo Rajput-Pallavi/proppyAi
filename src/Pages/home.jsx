@@ -5,17 +5,17 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import main from '../assets/main.png'
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: 'home', href: '#' },
+  { name: 'how it works', href: '#' },
+  { name: 'demo', href: '#' },
+  
 ]
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="bg-white dark:bg-gray-600">
+    <div className="bg-orange-300 dark:bg-gray-600">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
@@ -24,7 +24,7 @@ export default function Example() {
               <img
                 alt=""
                 src={main}
-                className="h-8 w-auto dark:hidden"
+                className="h-20 w-auto dark:hidden"
               />
               <img
                 alt=""

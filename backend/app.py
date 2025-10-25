@@ -9,9 +9,6 @@ from mysql.connector import Error, pooling
 import bcrypt
 import re
 import dns.resolver
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 from datetime import datetime
 import traceback
 
@@ -27,11 +24,7 @@ CORS(app)
 # ------------------------------------------------------
 # Cloudinary Configuration
 # ------------------------------------------------------
-cloudinary.config(
-    cloud_name='dsk2vrb6n',
-    api_key='936624974351843',
-    api_secret='YThqcZ6c87XahzLyeu4bM_FA4s8'
-)
+
 
   
 
